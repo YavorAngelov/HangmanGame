@@ -28,49 +28,28 @@
             string sourceFile = string.Empty;
             var words = new List<string>();
 
-            switch(categoryName)
+            switch (categoryName)
             {
-                case "capital": sourceFile = CapitalsFile;
+                case "capital":
+                    sourceFile = CapitalsFile;
                     break;
-                case "country": sourceFile = CountriesFile;
+                case "country":
+                    sourceFile = CountriesFile;
                     break;
-                case "continent": sourceFile = ContinentsFile;
+                case "continent":
+                    sourceFile = ContinentsFile;
                     break;
             }
 
             try
             {
-                using (var streamReader = new StreamReader(sourceFile))
-                {
-                    words = StreamWords(streamReader);
-                }
+                words = File.ReadAllLines(sourceFile).ToList();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(ErrorMessage);
                 Console.WriteLine(e.Message);
-            }
-
-            return words;
-        }
-
-        private static List<string> StreamWords(StreamReader textReader)
-        {
-            var words = new List<string>();
-            bool nextWord = true;
-
-            while (nextWord)
-            {
-                string currentLine = textReader.ReadLine();
-
-                if (currentLine == null || !currentLine.Any())
-                {
-                    nextWord = false;
-                }
-                else
-                {
-                    words.Add(currentLine);
-                }
+                Environment.Exit(0);
             }
 
             return words;
