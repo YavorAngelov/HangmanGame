@@ -5,8 +5,8 @@
     class GameEngine
     {
         private const string WelcomeMessage = "Welcome to “Hangman” game!\nPlease try to guess my secret word.\n";
-        private const string CategoryMessage = "It's a {0}.";
-        private const string SelectCategoryMessage = "Please select category.\n[1/Capitals]  [2/Countries]  [3/Continents]";
+        private const string SelectCategoryMessage = "Please select category.\n[1/Capitals]\n[2/Countries]\n[3/Continents]";
+        private const string CategoryMessage = "It's a {0}.\n";
         private const string WrongCategoryMessage = "Please select a number from 1 to 3.";
         private const string PlayAgainMessage = "Would you like to play again?\n[Y/N]";
 

@@ -10,9 +10,9 @@
         private const string WhitespaceSymbol = " ";
         private const string InputMessage = "Enter a letter:";
         private const string WelcomeMessage = "Welcome to “Hangman” game!\nPlease try to guess my secret word.\n";
-        private const string CategoryMessage = "It's a {0}.";
+        private const string CategoryMessage = "It's a {0}.\n";
         private const string ValidationMessage = "Please enter a single letter.";
-        private const string GuessedLetterMessage = "You've already tried the letter: {0}.";
+        private const string GuessedLetterMessage = "You've already tried the letter: {0}";
         private const string WinMessage = "Congratulations, you won! It was {0}.";
         private const string LoseMessage = "You Lost! The correct answer was {0}.";
         private const string IncorrectGuessesMessage = "Incorrect guesses: ";
