@@ -1,0 +1,13 @@
+london
+edinburgh
+ljubljana
+reykjavik
+budapest
+riga
+berlin
+warsaw
+rome
+oslo
+paris
+dublin
+sofia
