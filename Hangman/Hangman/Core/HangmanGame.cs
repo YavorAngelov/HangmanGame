@@ -58,12 +58,24 @@
             var hiddenWord = new char[this.wordToGuess.Length];
 
             int lastIndex = wordToGuess.Length - 1;
-            hiddenWord[0] = wordToGuess[0];
 
+            hiddenWord[0] = wordToGuess[0];
             hiddenWord[lastIndex] = wordToGuess[lastIndex];
 
             for (var i = 1; i < this.wordToGuess.Length - 1; i++)
             {
+                if (wordToGuess[i] == hiddenWord[0])
+                {
+                    hiddenWord[i] = hiddenWord[0];
+                    continue;
+                }
+
+                if (wordToGuess[i] == hiddenWord[lastIndex])
+                {
+                    hiddenWord[i] = hiddenWord[lastIndex];
+                    continue;
+                }
+
                 hiddenWord[i] = MaskSymbol;
             }
 
