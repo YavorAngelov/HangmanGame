@@ -30,13 +30,13 @@
 
             switch (categoryName)
             {
-                case "capital":
+                case "Capital":
                     sourceFile = CapitalsFile;
                     break;
-                case "country":
+                case "Country":
                     sourceFile = CountriesFile;
                     break;
-                case "continent":
+                case "Continent":
                     sourceFile = ContinentsFile;
                     break;
             }

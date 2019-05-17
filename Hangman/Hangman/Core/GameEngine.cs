@@ -6,7 +6,7 @@
     {
         private const string WelcomeMessage = "Welcome to “Hangman” game!\nPlease try to guess my secret word.\n";
         private const string SelectCategoryMessage = "Please select category.\n[1/Capitals]\n[2/Countries]\n[3/Continents]";
-        private const string CategoryMessage = "It's a {0}.\n";
+        private const string CategoryMessage = "Category: {0}\n";
         private const string WrongCategoryMessage = "Please select a number from 1 to 3.";
         private const string PlayAgainMessage = "Would you like to play again?\n[Y/N]";
 
@@ -60,13 +60,13 @@
             switch (number)
             {
                 case 1:
-                    category = "capital";
+                    category = "Capital";
                     break;
                 case 2:
-                    category = "country";
+                    category = "Country";
                     break;
                 case 3:
-                    category = "continent";
+                    category = "Continent";
                     break;
             }
 
