@@ -1,2 +1,2 @@
 # HangmanGame
-HangmanGame/ConsoleApplication
+Console Application
