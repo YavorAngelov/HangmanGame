@@ -6,7 +6,7 @@
     {
         private const string WelcomeMessage = "Welcome to “Hangman” game!\nPlease try to guess my secret word.\n";
         private const string SelectCategoryMessage = "Please select category.\n[1/Capitals]\n[2/Countries]\n[3/Continents]";
-        private const string CategoryMessage = "Category: {0}\n";
+        private const string CategoryMessage = "Category: {0}";
         private const string WrongCategoryMessage = "Please select a number from 1 to 3.";
         private const string PlayAgainMessage = "Would you like to play again?\n[Y/N]";
 
@@ -32,9 +32,6 @@
                 string word = this.wordsRepository.GetWord(category);
                 var hangmanGame = new HangmanGame(word);
 
-                Console.WriteLine(WelcomeMessage);
-                Console.WriteLine(CategoryMessage, category);
-
                 hangmanGame.Run(category);
 
                 play = PlayAgain();
@@ -43,19 +40,20 @@
 
         private string ParseCategory(string categoryNumber)
         {
+            string category = string.Empty;
+
             int number = 0;
             bool selected = int.TryParse(categoryNumber, out number);
 
             if (!selected || number < 0 || number > 3)
             {
                 Console.Clear();
+
                 DisplayWelcomeMessage();
                 Console.WriteLine(WrongCategoryMessage);
 
-                this.ParseCategory(Console.ReadLine());
+                category = this.ParseCategory(Console.ReadLine());
             }
-
-            string category = string.Empty;
 
             switch (number)
             {

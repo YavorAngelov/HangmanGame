@@ -10,7 +10,6 @@
         private const string WhitespaceSymbol = " ";
         private const string InputMessage = "Enter a letter:";
         private const string WelcomeMessage = "Welcome to “Hangman” game!\nPlease try to guess my secret word.\n";
-        private const string CategoryMessage = "Category: {0}\n";
         private const string ValidationMessage = "Please enter a single letter.";
         private const string GuessedLetterMessage = "You've already tried the letter: {0}";
         private const string WinMessage = "Congratulations, you won! It was {0}.";
@@ -19,6 +18,9 @@
 
         private int guessCounter;
         private bool allowInput;
+        private bool validInput = true;
+        private bool guessedInput = true;
+        private string guessedLetter = string.Empty;
 
         private string category;
         private readonly string wordToGuess;
@@ -26,7 +28,6 @@
 
         private readonly List<char> correctGuesses;
         private readonly List<char> incorrectGuesses;
-        private readonly GraphicDrawer graphicDrawer;
 
         public HangmanGame(string wordToGuess)
         {
@@ -36,9 +37,12 @@
             this.wordToGuess = wordToGuess;
             this.hiddenWord = this.HideWord();
 
-            this.correctGuesses = new List<char>();
+            this.correctGuesses = new List<char>()
+            {
+                wordToGuess[0],
+                wordToGuess[wordToGuess.Length - 1]
+            };
             this.incorrectGuesses = new List<char>();
-            this.graphicDrawer = new GraphicDrawer();
         }
 
         public void Run(string category)
@@ -47,8 +51,9 @@
 
             while (this.allowInput)
             {
-                this.DisplayIncorrectGuesses();
+                Console.WriteLine(WelcomeMessage);
                 this.DisplayGraphic();
+                this.DisplayIncorrectGuesses();
                 this.ReadInput();
             }
         }
@@ -82,14 +87,18 @@
             return hiddenWord;
         }
 
+        private void DisplayGraphic()
+        {
+            string hiddenWordGraphic = string.Join(WhitespaceSymbol, this.hiddenWord);
+            string gibbetGraphic = GraphicDrawer.DrawGibbet(this.guessCounter, this.category);
+
+            Console.WriteLine(gibbetGraphic);
+            Console.WriteLine(hiddenWordGraphic.ToUpper());
+        }
+
         private void DisplayIncorrectGuesses()
         {
             if (!this.allowInput)
-            {
-                return;
-            }
-
-            if (this.incorrectGuesses.Count == 0)
             {
                 return;
             }
@@ -99,51 +108,48 @@
             Console.WriteLine(IncorrectGuessesMessage + incorrectGuesses.ToUpper());
         }
 
-        private void DisplayGraphic()
-        {
-            string hiddenWordGraphic = string.Join(WhitespaceSymbol, this.hiddenWord);
-            string gibbetGraphic = this.graphicDrawer.DrawGibbet(guessCounter);
-
-            Console.WriteLine(gibbetGraphic);
-            Console.WriteLine(hiddenWordGraphic.ToUpper());
-        }
-
         private void ReadInput()
         {
-            Console.WriteLine();
+            if (!this.validInput)
+            {
+                Console.WriteLine(ValidationMessage);
+                this.validInput = true;
+            }
+            else if (!this.guessedInput)
+            {
+                Console.WriteLine(string.Format(GuessedLetterMessage, this.guessedLetter));
+                this.guessedInput = true;
+            }
+            else if(this.validInput && this.guessedInput)
+            {
+                Console.WriteLine();
+            }
+
             Console.WriteLine(InputMessage);
             var input = Console.ReadLine().ToLower();
 
             Console.Clear();
-            Console.WriteLine(WelcomeMessage);
-            Console.WriteLine(CategoryMessage, category);
+           
             this.ValidateInput(input);
         }
 
         private void ValidateInput(string input)
         {
-            if (!IsValid(input))
+            var validInputCondition = input.Length == 1 && char.IsLetter(input[0]);
+            if (!validInputCondition)
             {
+                this.validInput = false;
                 return;
             }
 
             if (this.IsLetterGuessed(input))
             {
+                this.guessedInput = false;
+                this.guessedLetter = input.ToUpper();
                 return;
             }
 
             this.CheckInputForMatchInHiddenWord(input);
-        }
-
-        private static bool IsValid(string input)
-        {
-            if (input.Length == 1 && char.IsLetter(input[0]))
-            {
-                return true;
-            }
-
-            Console.WriteLine(ValidationMessage);
-            return false;
         }
 
         private bool IsLetterGuessed(string input)
@@ -156,7 +162,6 @@
                 return false;
             }
 
-            Console.WriteLine(string.Format(GuessedLetterMessage, input.ToUpper()));
             return true;
         }
 
@@ -220,7 +225,10 @@
 
         private void GameOver(string message)
         {
+            Console.WriteLine(WelcomeMessage);
             this.DisplayGraphic();
+            this.DisplayIncorrectGuesses();
+
             Console.WriteLine();
             Console.WriteLine(string.Format(message, this.wordToGuess.ToUpper()));
             this.allowInput = false;
